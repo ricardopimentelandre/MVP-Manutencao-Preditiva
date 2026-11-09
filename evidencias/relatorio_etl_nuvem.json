@@ -1,0 +1,58 @@
+{
+  "projeto": "MVP SSD — Manutenção Preditiva",
+  "etapa": "Coleta, transformação, persistência e verificação da carga na nuvem",
+  "data_verificacao_utc": "2026-11-09T20:04:48.251161+00:00",
+  "fonte": {
+    "nome": "AI4I 2020 Predictive Maintenance Dataset",
+    "repositorio": "UCI Machine Learning Repository",
+    "id_uci": 601,
+    "doi": "10.24432/C5HS5C",
+    "licenca_dados": "CC BY 4.0",
+    "metodo": "fetch_ucirepo(id=601)",
+    "formato_persistido": "CSV UTF-8",
+    "observacao_bronze": "DataFrame original retornado pelo ucimlrepo, serializado em CSV; não é copia byte a byte do arquivo original da UCI."
+  },
+  "ambiente": {
+    "python": "3.13.18",
+    "pandas": "2.2.3",
+    "ucimlrepo": "0.0.7"
+  },
+  "transformacoes": [
+    "Selecao das seis colunas com papel Feature, sem excluir linhas",
+    "Selecao apenas do alvo Machine failure, excluindo outros alvos da modelagem",
+    "Concatenacao por ordem dos registros, preservando 10000 linhas",
+    "Serializacao dos DataFrames em CSV UTF-8"
+  ],
+  "arquivos_no_drive": {
+    "bronze": {
+      "caminho_relativo_execucao": "bronze/ai4i_original_ucimlrepo.csv",
+      "linhas": 10000,
+      "colunas": 14,
+      "bytes": 828421,
+      "sha256": "bdbf4979441ade2b202f4d588bbf971d33ad5720a1782538541971429c95fd7b"
+    },
+    "prata": {
+      "caminho_relativo_execucao": "prata/ai4i_modelagem.csv",
+      "linhas": 10000,
+      "colunas": [
+        "Type",
+        "Air temperature",
+        "Process temperature",
+        "Rotational speed",
+        "Torque",
+        "Tool wear",
+        "Machine failure"
+      ],
+      "falhas": 339,
+      "bytes": 609492,
+      "sha256": "72812a8462ee1dcfee89a0c73c41c47524ddef195db6843bcf40247c591dec39"
+    }
+  },
+  "validacoes": {
+    "arquivos_reabertos_do_drive": true,
+    "conteudo_compativel_com_original_apos_releitura": true,
+    "linhas_esperadas": 10000,
+    "falhas_esperadas": 339,
+    "aprovado": true
+  }
+}
