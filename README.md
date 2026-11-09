@@ -23,7 +23,7 @@ Interpretações, fontes e limites de cada pergunta: [perguntas de negócio e ap
 
 - **Fonte:** [AI4I 2020 Predictive Maintenance Dataset](https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset), UCI Machine Learning Repository, ID 601, DOI [10.24432/C5HS5C](https://doi.org/10.24432/C5HS5C).
 - **Licença da base:** [Creative Commons Attribution 4.0 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/); atribuição à fonte necessária. A licença dos **dados não equivale** à licença do código do projeto.
-- **Natureza:** dados **sintéticos**, não provenientes de sensores de uma fábrica real.
+- **Natureza:** dados **sintéticos**, não provenientes de sensores de uma fábrica real. **Não são utilizados dados pessoais ou registros de máquinas ou empresas identificáveis.**
 - **Coleta persistida e verificada:** 09/11/2026, via `fetch_ucirepo(id=601)`, usando Google Colab e Google Drive; dados serializados como **CSV UTF-8**.
 - **Bronze:** 10.000 linhas × 14 colunas, correspondentes ao DataFrame recebido via `ucimlrepo` e salvo em CSV (não é cópia byte a byte do CSV distribuído pela UCI).
 - **Prata:** 10.000 linhas × 7 colunas, sendo seis entradas e o alvo `Machine failure`: `Type`, `Air temperature` (K), `Process temperature` (K), `Rotational speed` (rpm), `Torque` (Nm), `Tool wear` (min) e `Machine failure` (0/1).
@@ -42,6 +42,8 @@ UCI AI4I 2020 (id=601)
     → Colab: divisão 80/20, pré-processamento e três modelos
     → classificador selecionado → resultado e recomendação textual
 ```
+
+O projeto utiliza **Google Drive como armazenamento persistente dos arquivos CSV** em organização bronze/prata e **Google Colab como ambiente computacional de ETL e análise**. É uma estrutura *flat*, semelhante à organização de um Data Lake para fins acadêmicos; **não constitui um serviço gerenciado de Data Warehouse nem um Data Lake corporativo**.
 
 Na execução de 09/11/2026, as camadas **bronze e prata foram gravadas e relidas** do Google Drive. A etapa de integração treinou os três modelos **a partir da prata relida**, sem fazer nova coleta na UCI. O relatório da integração registra conferência do SHA-256 e reprodução das métricas e dos dois exemplos de orientação.
 
@@ -110,7 +112,7 @@ A análise da prata e da bronze persistidas no Drive documentou:
 
 Dessas 27 divergências, **9** têm alvo de falha igual a 1 sem nenhum modo marcado e **18** têm `RNF=1` com alvo 0. A diferença **já existia na bronze**, não foi criada pelo ETL. Não se alteraram os rótulos, pois isso mudaria o experimento de origem. Faixas numéricas listadas no catálogo são **limites observados**, não regras para novos equipamentos.
 
-Consulte [catálogo e linhagem](docs/modelo_catalogo_linhagem.md) e [relatório de qualidade](evidencias/relatorio_qualidade_dados.json).
+Consulte [catálogo e linhagem](docs/modelo_catalogo_linhagem.md), [relatório de qualidade](evidencias/relatorio_qualidade_dados.json) e o [script de auditoria reproduzível](scripts/auditar_dados.py). Para executar a auditoria com os CSVs da sua própria carga: `python scripts/auditar_dados.py --bronze caminho/bronze/ai4i_original_ucimlrepo.csv --prata caminho/prata/ai4i_modelagem.csv`. O script é uma **reimplementação verificável dos controles**, publicada após o relatório inicial; não foi o gerador histórico daquele JSON.
 
 ## 7. Como consultar e executar
 
@@ -138,6 +140,7 @@ Consulte [catálogo e linhagem](docs/modelo_catalogo_linhagem.md) e [relatório 
 | [`docs/modelo_catalogo_linhagem.md`](docs/modelo_catalogo_linhagem.md) | Modelo flat, catálogo de sete campos, transformações e linhagem |
 | [`docs/perguntas_negocio_apoio_decisao.md`](docs/perguntas_negocio_apoio_decisao.md) | Perguntas, respostas, decisões e limitações |
 | [`requirements.txt`](requirements.txt) | Versões utilizadas na reprodução |
+| [`scripts/auditar_dados.py`](scripts/auditar_dados.py) | Reexecução dos controles de qualidade e linhagem dos CSVs |
 | [`evidencias/relatorio_etl_nuvem.json`](evidencias/relatorio_etl_nuvem.json) | Coleta, gravação, releitura e hashes de bronze/prata |
 | [`evidencias/relatorio_qualidade_dados.json`](evidencias/relatorio_qualidade_dados.json) | Controles de qualidade e divergências da base |
 | [`evidencias/relatorio_reproducao_ssd.json`](evidencias/relatorio_reproducao_ssd.json) | Reexecução controlada dos três modelos |
