@@ -1,0 +1,128 @@
+{
+  "projeto": "MVP — SSD Manutenção Preditiva",
+  "verificacao": "Catálogo e qualidade da camada prata",
+  "data_verificacao": "2026-11-09",
+  "observacao": "Auditoria independente dos CSVs persistidos no Google Drive; não altera os dados.",
+  "origem": {
+    "dataset": "AI4I 2020 Predictive Maintenance Dataset",
+    "uci_id": 601,
+    "licenca": "CC BY 4.0",
+    "execucao_drive": "20261109T200446Z",
+    "bronze": "https://drive.google.com/file/d/1i2osfEb5oTiyMMNQWGEabjg4fmsjuWTz/view",
+    "prata": "https://drive.google.com/file/d/1cs9dIXXyZkuW1p_bTk7WHU7u-7nZZG8z/view"
+  },
+  "modelo": "flat",
+  "grao": "uma observação sintética de processo/equipamento; sem carimbo de tempo ou identificador persistido na prata",
+  "bronze": {
+    "linhas": 10000,
+    "colunas": [
+      "UID",
+      "Product ID",
+      "Type",
+      "Air temperature",
+      "Process temperature",
+      "Rotational speed",
+      "Torque",
+      "Tool wear",
+      "Machine failure",
+      "TWF",
+      "HDF",
+      "PWF",
+      "OSF",
+      "RNF"
+    ]
+  },
+  "prata": {
+    "linhas": 10000,
+    "colunas": [
+      "Type",
+      "Air temperature",
+      "Process temperature",
+      "Rotational speed",
+      "Torque",
+      "Tool wear",
+      "Machine failure"
+    ],
+    "estatisticas_por_coluna": {
+      "Type": {
+        "n": 10000,
+        "nullos": 0,
+        "distintos": 3,
+        "valores": {
+          "M": 2997,
+          "L": 6000,
+          "H": 1003
+        }
+      },
+      "Air temperature": {
+        "n": 10000,
+        "nullos": 0,
+        "distintos": 93,
+        "minimo": 295.3,
+        "maximo": 304.5,
+        "inteiros": false
+      },
+      "Process temperature": {
+        "n": 10000,
+        "nullos": 0,
+        "distintos": 82,
+        "minimo": 305.7,
+        "maximo": 313.8,
+        "inteiros": false
+      },
+      "Rotational speed": {
+        "n": 10000,
+        "nullos": 0,
+        "distintos": 941,
+        "minimo": 1168,
+        "maximo": 2886,
+        "inteiros": true
+      },
+      "Torque": {
+        "n": 10000,
+        "nullos": 0,
+        "distintos": 577,
+        "minimo": 3.8,
+        "maximo": 76.6,
+        "inteiros": false
+      },
+      "Tool wear": {
+        "n": 10000,
+        "nullos": 0,
+        "distintos": 246,
+        "minimo": 0,
+        "maximo": 253,
+        "inteiros": true
+      },
+      "Machine failure": {
+        "n": 10000,
+        "nullos": 0,
+        "distintos": 2,
+        "minimo": 0,
+        "maximo": 1,
+        "inteiros": true,
+        "valores": {
+          "0": 9661,
+          "1": 339
+        }
+      }
+    }
+  },
+  "controles": {
+    "colunas_prata_na_ordem_esperada": true,
+    "nulos_em_prata": 0,
+    "linhas_duplicadas_exatas_na_prata": 0,
+    "celulas_preservadas_da_bronze_para_prata": 70000,
+    "celulas_esperadas": 70000,
+    "tipos_de_categoria_ou_alvo_invalidos": 0,
+    "valores_fisicos_sinal_invalido": 0,
+    "temperatura_processo_menor_que_ar": 0,
+    "UID_bronze_valores_unicos": 10000,
+    "UID_bronze_fora_sequencia": 0,
+    "ID_produto_tipo_incompativel": 0,
+    "divergencias_alvo_versus_ou_dos_modos": 27,
+    "alvo_1_sem_modo_1": 9,
+    "alvo_0_com_modo_1": 18
+  },
+  "parecer": "A seleção e a cópia dos 7 campos foram consistentes. Há 27 divergências entre Machine failure e a combinação dos 5 modos de falha já presentes na camada bronze; não foram corrigidas, pois a auditoria não autoriza redefinir o alvo."
+}
