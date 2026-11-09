@@ -45,7 +45,7 @@ UCI AI4I 2020 (id=601)
 
 Na execução de 09/11/2026, as camadas **bronze e prata foram gravadas e relidas** do Google Drive. A etapa de integração treinou os três modelos **a partir da prata relida**, sem fazer nova coleta na UCI. O relatório da integração registra conferência do SHA-256 e reprodução das métricas e dos dois exemplos de orientação.
 
-**Limite de reprodutibilidade:** o notebook de **ETL/coleta e carga** usado na execução ainda **não está versionado neste repositório**. O notebook integrado contém um caminho e SHA-256 específicos da execução do autor no Drive; terceiros sem acesso à pasta não podem simplesmente executar esse fluxo. Os relatórios e capturas documentam a execução realizada, mas ainda falta publicar o código de ETL para permitir reprodução ponta a ponta **somente a partir do GitHub**. Os CSVs permanecem no Drive do projeto; não estão incluídos no repositório.
+**Limite de reprodutibilidade:** o notebook de **ETL/coleta e carga está versionado** em [`notebooks/ETL_MVP_SSD_Colab_GoogleDrive.ipynb`](notebooks/ETL_MVP_SSD_Colab_GoogleDrive.ipynb). O notebook integrado utiliza caminho e SHA-256 **fixos** da execução do autor no Drive; terceiros precisam executar o ETL na própria conta e **ajustar o caminho e o hash** no notebook integrado para usar seu CSV gerado. Portanto, a execução original está documentada, mas a reprodução ponta a ponta **não é automática nem portátil** sem essas adaptações. Os CSVs permanecem no Drive do projeto; não estão incluídos no repositório.
 
 ## 4. Método de classificação
 
@@ -116,13 +116,14 @@ Consulte [catálogo e linhagem](docs/modelo_catalogo_linhagem.md) e [relatório 
 2. Execute tudo, montando o Drive quando solicitado. O código verifica um caminho **fixo** e SHA-256 do CSV prata; falha se o arquivo não for o mesmo.
 3. Confira as métricas e as recomendações; o relatório publicado é [`evidencias/relatorio_integracao_mvp.json`](evidencias/relatorio_integracao_mvp.json).
 
-**Para reconstruir o fluxo inteiro a partir de zero:** ainda falta versionar no GitHub o notebook de ETL da Etapa 2 e remover/parametrizar o caminho fixo para diferentes contas. **Não se afirma reprodutibilidade ponta a ponta por terceiros no estado atual.**
+**Para reconstruir o fluxo inteiro a partir de zero:** execute [`notebooks/ETL_MVP_SSD_Colab_GoogleDrive.ipynb`](notebooks/ETL_MVP_SSD_Colab_GoogleDrive.ipynb) no Colab, autorizando sua conta do Drive. Em seguida, copie o caminho e o SHA-256 do CSV prata gerado para os parâmetros correspondentes de [`notebooks/Integracao_MVP_SSD_Drive_Modelos.ipynb`](notebooks/Integracao_MVP_SSD_Drive_Modelos.ipynb), antes de executar a integração. **A reprodução ponta a ponta demanda essa configuração manual e ainda não foi testada como fluxo portátil por terceiros.**
 
 ## 8. Estrutura e evidências
 
 | Arquivo/pasta | Conteúdo |
 |---|---|
 | [`MVP_Manutencao_Preditiva.ipynb`](MVP_Manutencao_Preditiva.ipynb) | Notebook original, preservado |
+| [`notebooks/ETL_MVP_SSD_Colab_GoogleDrive.ipynb`](notebooks/ETL_MVP_SSD_Colab_GoogleDrive.ipynb) | Coleta UCI, ETL, gravação bronze/prata no Drive e validação da carga |
 | [`notebooks/Integracao_MVP_SSD_Drive_Modelos.ipynb`](notebooks/Integracao_MVP_SSD_Drive_Modelos.ipynb) | Leitura da prata no Drive, treino e orientação |
 | [`docs/modelo_catalogo_linhagem.md`](docs/modelo_catalogo_linhagem.md) | Modelo flat, catálogo de sete campos, transformações e linhagem |
 | [`docs/perguntas_negocio_apoio_decisao.md`](docs/perguntas_negocio_apoio_decisao.md) | Perguntas, respostas, decisões e limitações |
@@ -141,15 +142,15 @@ Os arquivos no Google Drive **não são públicos** por padrão. Os caminhos nos
 
 **Quais limitações dos dados afetam o resultado?** A base é sintética, a classe de falha é rara (3,39%), há 27 divergências entre o alvo e a combinação dos indicadores de modo de falha, e não há séries temporais de máquinas reais. O resultado em um único teste não mede desempenho industrial.
 
-**O que seria feito de outra forma ao recomeçar?** Definir e registrar previamente as perguntas e critérios de aceitação; separar treino, validação e teste; controlar versões desde a primeira execução; organizar o ETL como código versionado e preservar uma chave técnica estável na prata.
+**O que seria feito de outra forma ao recomeçar?** Definir e registrar previamente as perguntas e critérios de aceitação; separar treino, validação e teste; controlar versões desde a primeira execução; versionar o ETL **desde o início** (ele foi publicado posteriormente) e preservar uma chave técnica estável na prata.
 
 **O que falta para uso contínuo?** Tornar ETL/inferência reproduzíveis e automatizados, parametrizar o acesso à nuvem, validar com dados operacionais autorizados, estimar custos de falsos alarmes e falhas não identificadas, medir calibração, estabelecer monitoramento e governança e testar o fluxo com usuários reais. Nada disso foi validado em ambiente de produção.
 
 **Consideração técnica:** a execução documentada usa recursos do Google Colab e Google Drive; não foi realizado levantamento financeiro para estimar o custo de operação em escala. Tampouco foi conduzido estudo de aceitação por usuários.
 
-**Licenciamento do código:** a base está sob CC BY 4.0; **não há arquivo `LICENSE` nem licença de código escolhida no repositório**. É uma pendência documental a resolver, sem inferir automaticamente uma licença para a implementação.
+**Licenciamento:** o **código e a documentação autoral** deste repositório estão sob a [licença MIT](LICENSE), com aviso de copyright. **Os dados AI4I 2020 da UCI têm licença própria, CC BY 4.0**, que exige atribuição à fonte e não é substituída pela licença do código.
 
 ---
 
-**Escopo comprovado:** pipeline bronze/prata no Drive, análise de qualidade, reprodução dos classificadores e demonstração integrada de apoio à decisão em Colab.  
-**Escopo não comprovado:** prevenção real de falhas, superioridade geral de algoritmo, implantação industrial e reprodutibilidade ponta a ponta por uma pessoa sem acesso ao Drive original.
+**Escopo comprovado:** pipeline bronze/prata no Drive, código do ETL versionado, análise de qualidade, reprodução dos classificadores e demonstração integrada de apoio à decisão em Colab.  
+**Escopo não comprovado:** prevenção real de falhas, superioridade geral de algoritmo, implantação industrial e reprodução automática e sem adaptação em contas de terceiros.
