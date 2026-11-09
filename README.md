@@ -75,6 +75,16 @@ Matrizes de confusão do teste, na ordem **[[VN, FP], [FN, VP]]**:
 
 Nesta partição, o Random Forest sem balanceamento atingiu maior F1-score da classe positiva, mas **não identificou 32 das 68 falhas (47,1%)**. Os resultados valem para este experimento e ambiente, não para sistemas industriais reais.
 
+**Figuras extraídas das saídas já salvas no notebook original (agosto/2026):**
+
+![Distribuição das classes](evidencias/distribuicao_classes.png)
+
+| Regressão Logística | Random Forest | Random Forest balanceado |
+|---|---|---|
+| ![Matriz de confusão da Regressão Logística](evidencias/matriz_regressao_logistica.png) | ![Matriz de confusão do Random Forest](evidencias/matriz_random_forest.png) | ![Matriz de confusão do Random Forest balanceado](evidencias/matriz_random_forest_balanceado.png) |
+
+As figuras acima **não são capturas da execução de integração no Colab**; para essa execução, o registro disponível é o [relatório JSON validado](evidencias/relatorio_integracao_mvp.json).
+
 **Reprodução de ambiente:** em 09/11/2026, os resultados acima foram reproduzidos no Colab com **Python 3.13.18** e **scikit-learn 1.8.0**, usando a fonte oficial da UCI; as outras versões constam em [`requirements.txt`](requirements.txt) e no [relatório de reprodução](evidencias/relatorio_reproducao_ssd.json). **Não é conhecida a versão do scikit-learn usada na execução original de agosto/2026**. O desempenho do Random Forest balanceado pode variar em outras versões.
 
 ## 5. Saída do SSD
@@ -132,7 +142,7 @@ Consulte [catálogo e linhagem](docs/modelo_catalogo_linhagem.md) e [relatório 
 | [`evidencias/relatorio_qualidade_dados.json`](evidencias/relatorio_qualidade_dados.json) | Controles de qualidade e divergências da base |
 | [`evidencias/relatorio_reproducao_ssd.json`](evidencias/relatorio_reproducao_ssd.json) | Reexecução controlada dos três modelos |
 | [`evidencias/relatorio_integracao_mvp.json`](evidencias/relatorio_integracao_mvp.json) | Treino usando a prata do Drive e demonstrações |
-| [`evidencias/`](evidencias/) | Duas capturas da presença dos CSVs bronze e prata no Drive |
+| [`evidencias/`](evidencias/) | Duas capturas da presença dos CSVs bronze/prata no Drive, quatro gráficos exportados do notebook original e relatórios JSON da execução |
 
 Os arquivos no Google Drive **não são públicos** por padrão. Os caminhos nos relatórios indicam a execução real; para auditar o acesso, é necessário ter permissão à conta/pasta correspondente. As capturas demonstram a presença dos arquivos, e os relatórios registram integridade, métricas e verificações.
 
