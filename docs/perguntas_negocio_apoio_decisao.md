@@ -87,7 +87,7 @@ Julgamento humano (fora do código do MVP)
 
 ## 4. Relação com o pipeline de dados em nuvem
 
-O ETL executado no Google Colab salvou e validou duas tabelas CSV no Google Drive (camadas bronze e prata). O notebook original de classificação, porém, obtém os dados novamente pela UCI e **não demonstra leitura direta do CSV prata persistido na nuvem para treinamento**. Assim, a cadeia **coleta → carga na nuvem** e a demonstração **treino → previsão → recomendação** estão comprovadas como partes do projeto, mas ainda não como um único fluxo de execução integrado. Essa diferença deve ser mantida transparente no README e na autoavaliação.
+O ETL executado no Google Colab salvou e validou duas tabelas CSV no Google Drive (camadas bronze e prata). O notebook original de classificação continua obtendo os dados diretamente da UCI e foi preservado. **Posteriormente**, foi criado e executado o notebook [`notebooks/Integracao_MVP_SSD_Drive_Modelos.ipynb`](../notebooks/Integracao_MVP_SSD_Drive_Modelos.ipynb), que lê a camada prata efetivamente persistida no Drive, verifica seu SHA-256, reproduz as matrizes de confusão dos três modelos e executa as recomendações. Essa execução foi aprovada e registrada em [`evidencias/relatorio_integracao_mvp.json`](../evidencias/relatorio_integracao_mvp.json). Assim, há evidência do fluxo **UCI → ETL → carga no Drive → leitura da prata → treino → previsão → recomendação**, embora a integração ainda utilize caminho e hash fixos da execução do autor, exigindo configuração manual em outra conta.
 
 ## 5. Conclusão desta etapa
 
