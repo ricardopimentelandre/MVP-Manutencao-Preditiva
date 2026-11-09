@@ -29,6 +29,22 @@ Todos os sete campos são **obrigatórios** neste conjunto; a auditoria dos 10.0
 
 A coluna `Type` contém L: 6.000, M: 2.997 e H: 1.003. O alvo tem 9.661 registros sem falha (96,61%) e 339 com falha (3,39%). Não é recomendado impor os mínimos/máximos observados como regra de exclusão sem validação técnica.
 
+### Metadados por atributo e campos adicionais da bronze
+
+As sete colunas da **prata** são obrigatórias nesta carga e não possuem nulos. A linhagem individual é **UCI → coluna homônima da bronze → seleção sem alteração → prata**. A data da extração é **09/11/2026**. Faixas numéricas da tabela anterior são *observadas*, não limites físicos universais.
+
+| Campo adicional da bronze | Tipo e significado | Obrigatório na carga | Domínio observado / esperado no AI4I | Linhagem |
+|---|---|---|---|---|
+| `UID` | Inteiro, identificador sequencial do registro | Sim | 1 a 10.000, único | UCI → bronze; excluído da prata |
+| `Product ID` | Texto, identificador do produto | Sim | Prefixo L/M/H compatível com `Type` | UCI → bronze; excluído da prata |
+| `TWF` | Indicador binário de falha por desgaste da ferramenta | Sim | 0 ou 1 | UCI → bronze; excluído da prata |
+| `HDF` | Indicador binário de falha por dissipação de calor | Sim | 0 ou 1 | UCI → bronze; excluído da prata |
+| `PWF` | Indicador binário de falha de potência | Sim | 0 ou 1 | UCI → bronze; excluído da prata |
+| `OSF` | Indicador binário de falha por sobrecarga | Sim | 0 ou 1 | UCI → bronze; excluído da prata |
+| `RNF` | Indicador binário de falha aleatória | Sim | 0 ou 1 | UCI → bronze; excluído da prata |
+
+Os campos são retidos na bronze para auditoria, mas não compõem as entradas do modelo, evitando vazamento de informação sobre falhas. Para os indicadores binários, o domínio é categórico `{0,1}`; nenhum deles deve ser utilizado como preditor da variável `Machine failure`.
+
 ## 3. Linhagem e transformações
 
 ```text
@@ -76,4 +92,4 @@ Cada coluna da prata vem **da coluna homônima na bronze**, sem renomeação e s
 - Evidência do ETL: `evidencias/relatorio_etl_nuvem.json`
 - Evidência adicional de catálogo/qualidade: `evidencias/relatorio_qualidade_dados.json`
 
-O notebook original `MVP_Manutencao_Preditiva.ipynb` e o short paper **não foram modificados** nesta etapa.
+O notebook original `MVP_Manutencao_Preditiva.ipynb` foi preservado.
