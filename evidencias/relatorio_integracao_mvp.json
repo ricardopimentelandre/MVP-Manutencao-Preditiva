@@ -1,0 +1,101 @@
+{
+  "projeto": "MVP SSD — Manutenção Preditiva",
+  "etapa": "Integração da camada prata persistida em nuvem com classificação e apoio à decisão",
+  "data_execucao_utc": "2026-11-09T20:53:30.118178+00:00",
+  "commit_notebook_original": "303a80b0c9a74d098251a78571c1e3aedb2842fc",
+  "origem_efetivamente_lida": "/content/drive/MyDrive/UnB/SSD/MVP_Manutencao_Preditiva/execucoes/20261109T200446Z/prata/ai4i_modelagem.csv",
+  "fonte_csv": "Google Drive / camada prata criada na etapa de ETL, sem nova coleta UCI",
+  "sha256_prata": "72812a8462ee1dcfee89a0c73c41c47524ddef195db6843bcf40247c591dec39",
+  "ambiente": {
+    "python": "3.13.18",
+    "scikit-learn": "1.8.0",
+    "pandas": "2.2.3",
+    "numpy": "2.4.6"
+  },
+  "dados": {
+    "n_linhas": 10000,
+    "n_colunas": 7,
+    "n_falhas": 339,
+    "n_treino": 8000,
+    "n_teste": 2000,
+    "n_falhas_teste": 68
+  },
+  "resultados": {
+    "Regressão Logística": {
+      "acuracia": 0.9675,
+      "precisao_falha": 0.6363636363636364,
+      "recall_falha": 0.10294117647058823,
+      "f1_falha": 0.17721518987341772,
+      "matriz_confusao": [
+        [
+          1928,
+          4
+        ],
+        [
+          61,
+          7
+        ]
+      ]
+    },
+    "Random Forest": {
+      "acuracia": 0.982,
+      "precisao_falha": 0.9,
+      "recall_falha": 0.5294117647058824,
+      "f1_falha": 0.6666666666666666,
+      "matriz_confusao": [
+        [
+          1928,
+          4
+        ],
+        [
+          32,
+          36
+        ]
+      ]
+    },
+    "Random Forest balanceado": {
+      "acuracia": 0.981,
+      "precisao_falha": 0.96875,
+      "recall_falha": 0.45588235294117646,
+      "f1_falha": 0.62,
+      "matriz_confusao": [
+        [
+          1931,
+          1
+        ],
+        [
+          37,
+          31
+        ]
+      ]
+    }
+  },
+  "comparacao_matrizes_originais": {
+    "Regressão Logística": true,
+    "Random Forest": true,
+    "Random Forest balanceado": true
+  },
+  "todos_modelos_conferem": true,
+  "exemplos": {
+    "falha_detectada": {
+      "classe_prevista": 1,
+      "escore_modelo": 0.94,
+      "resultado": "POSSÍVEL FALHA IDENTIFICADA",
+      "recomendacao": "priorizar a avaliação desta condição pela equipe de manutenção."
+    },
+    "sem_falha_detectada": {
+      "classe_prevista": 0,
+      "escore_modelo": 0.13,
+      "resultado": "NÃO FOI IDENTIFICADA FALHA",
+      "recomendacao": "manter o acompanhamento das condições operacionais."
+    }
+  },
+  "exemplos_conferem": true,
+  "aprovado": true,
+  "limites": [
+    "Dados sintéticos; não demonstra validade em máquinas reais.",
+    "Seleção de modelo baseada na própria partição de teste.",
+    "Escores predict_proba não calibrados como probabilidades reais.",
+    "Demonstração não é um serviço operacional em tempo real."
+  ]
+}
