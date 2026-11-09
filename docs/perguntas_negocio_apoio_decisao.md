@@ -93,4 +93,4 @@ O ETL executado no Google Colab salvou e validou duas tabelas CSV no Google Driv
 
 As quatro perguntas foram respondidas **na extensão permitida pelas evidências existentes**, e o modelo oferece uma orientação simples para triagem humana. Não há prova de eficácia operacional, economia, prevenção de falhas em máquinas reais ou segurança para automatizar intervenções. A documentação das perguntas é posterior ao experimento, em atendimento ao esforço de explicitar problema, interpretação e limites; não equivale a comprovar planejamento prévio.
 
-**Arquivos preservados:** `MVP_Manutencao_Preditiva.ipynb` e o short paper. **Nenhuma métrica, regra ou saída do classificador foi alterada.**
+**Preservação:** o notebook original foi mantido, sem modificar suas métricas, regras ou saídas.
